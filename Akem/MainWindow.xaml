@@ -1,0 +1,172 @@
+﻿<Window x:Class="Akem.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Akem"
+        xmlns:controls="clr-namespace:Akem.Controls"
+        mc:Ignorable="d"
+        Title="New Project"
+        WindowState="Maximized"
+        Icon="appicon.png">
+   <!-- <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="150" />
+    </WindowChrome.WindowChrome>6-->
+    <Window.Resources>
+        <Style TargetType="Control" x:Key="Basic">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        
+        <Style TargetType="{x:Type ToggleButton}">
+            <Setter Property="Width" Value="64"/>
+            <Setter Property="Height" Value="64"/>
+            <Setter Property="Margin" Value="2 5"/>
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+        <Style TargetType="GroupBox" BasedOn="{StaticResource Basic}">
+            <Setter Property="Padding" Value="0 5 0 0"/>
+        </Style>
+        <Style x:Key="TileRectangle" TargetType="Rectangle">
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="Height" Value="20"/>
+            
+        </Style>
+        <Style x:Key="PaletteButton" TargetType="Button" BasedOn="{StaticResource Basic}">
+            <Setter Property="Foreground" Value="LightSalmon"/>
+            <Setter Property="Background" Value="Linen"/>
+        </Style>
+        <Style x:Key="OperationButton" TargetType="Button" BasedOn="{StaticResource PaletteButton}">
+            <Setter Property="Width" Value="40"/>
+        </Style>
+    </Window.Resources>
+            <Grid Name="MainGrid">
+            <Grid.Resources>
+            <ResourceDictionary>
+                <controls:MozaicCanvas x:Key="MozaicCanvas" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </ResourceDictionary>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="9*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions >
+        <Border BorderBrush="Gray" BorderThickness="0 0 2 0">
+            <ScrollViewer  Name="ImageScrollViewerViewer" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" DragEnter="ImageScrollViewerViewer_DragEnter" AllowDrop="True"  BorderThickness="3" Margin="73,30,-73,-30">
+                <ScrollViewer.Background>
+                    <VisualBrush TileMode="Tile" Viewport="0,0,0.25,0.25">
+                        <VisualBrush.Visual>
+                            <Image Source= "background.png" Stretch="Uniform"></Image>
+                        </VisualBrush.Visual>
+                    </VisualBrush>
+                </ScrollViewer.Background>
+                <Grid Name="CanvasGrid" VerticalAlignment="Center" HorizontalAlignment="Center" Row="0" Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <DockPanel Name="ImagePanel" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Drop="ImagePanel_Drop" AllowDrop="True">
+                        <TextBlock FontSize="15" Foreground="LightGray">Drag your image here or click the area</TextBlock>
+                    </DockPanel>
+                </Grid>
+            </ScrollViewer>
+        </Border>
+        <StackPanel Grid.Column="1">
+            <StackPanel.Background>
+                <SolidColorBrush Color="DimGray">
+                </SolidColorBrush>
+            </StackPanel.Background>
+            <GroupBox Header="Instrument">
+                <WrapPanel >
+                    <ToggleButton>
+                        <ContentControl>
+                                <Image Source="select.png"/>
+                        </ContentControl>
+                    </ToggleButton>
+                    <ToggleButton/>
+                    <ToggleButton/>
+                </WrapPanel>
+            </GroupBox>
+            <GroupBox Header="Rendering">
+                <StackPanel>
+                        <CheckBox Style="{StaticResource Basic}">Keep ratio</CheckBox>
+                        <Grid Margin="0 5 0 0">
+                            <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Margin="0 0 5 0">Width:</TextBlock>
+                        <TextBox Grid.Column="1"></TextBox>
+                        <TextBlock Grid.Column="2" Margin="5 0 5 0">Height:</TextBlock>
+                        <TextBox Grid.Column="3"></TextBox>
+                       </Grid>
+                    <TextBlock Margin="0 0 5 0">Grout</TextBlock>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Style="{StaticResource PaletteButton}" Grid.Column="0"  HorizontalAlignment="Right">Color</Button>
+                        <ComboBox Grid.Column="1" Margin="0 5 0 0" VerticalAlignment="Center"></ComboBox>
+                    </Grid>
+                </StackPanel>
+            </GroupBox>            
+            <GroupBox Header="Palette">
+                <StackPanel>
+                    <Rectangle Fill="LightSeaGreen" Width="40" Height="40" Margin="0 0 0 5"/>
+                    <WrapPanel>
+                        <Rectangle Fill="Indigo" Style="{StaticResource TileRectangle}"/>
+                        <Rectangle Fill="ForestGreen" Style="{StaticResource TileRectangle}"/>
+                        <Rectangle Fill="Firebrick" Style="{StaticResource TileRectangle}"/>
+                        <Rectangle Fill="DarkOliveGreen" Style="{StaticResource TileRectangle}"/>
+                        <Rectangle Fill="DarkCyan" Style="{StaticResource TileRectangle}"/>
+                        <Rectangle Fill="Coral" Style="{StaticResource TileRectangle}"/>
+                        <Rectangle Fill="Brown" Style="{StaticResource TileRectangle}"/>
+                        <Rectangle Fill="RoyalBlue" Style="{StaticResource TileRectangle}"/>
+                        <Rectangle Fill="SeaGreen" Style="{StaticResource TileRectangle}"/>
+                        <Rectangle Fill="Yellow" Style="{StaticResource TileRectangle}"/>
+                        <Rectangle Fill="Teal" Style="{StaticResource TileRectangle}"/>
+                    </WrapPanel>
+                    <WrapPanel FlowDirection="RightToLeft">
+                        <Button Margin="2" Style="{StaticResource PaletteButton}">DEL</Button>
+                        <Button Style="{StaticResource PaletteButton}">ADD</Button>
+                    </WrapPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="Operations" Padding="0 5 0 0">
+                <StackPanel >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Button Style="{StaticResource OperationButton}" Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Center">RENDER</Button>
+                        <Button Style="{StaticResource OperationButton}" Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Center">SHUFFLE</Button>
+                        <Button Style="{StaticResource OperationButton}" Grid.Row="0" Grid.Column="1"  HorizontalAlignment="Center">PRINT</Button>
+                        <Button Style="{StaticResource OperationButton}" Grid.Row="1" Grid.Column="1"  HorizontalAlignment="Center">SAVE</Button>
+                        <Button Style="{StaticResource OperationButton}" Grid.Row="1" Grid.Column="1"  HorizontalAlignment="Center">SAVE</Button>
+                    </Grid>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+    </Grid>
+</Window>
